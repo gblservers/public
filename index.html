@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GBL Servers — Regenerative GPU Compute in Ann Arbor</title>
+  <title>GBL Servers - Regenerative GPU Compute in Ann Arbor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="GBL Servers provides local, net carbon-negative NVIDIA GPU compute in Ann Arbor, Michigan for AI and ML workloads.">
   <style>
@@ -1150,6 +1150,42 @@
     .text-xs {
       font-size: 11px;
     }
+	
+	/* ==========================
+   FIX: MOBILE NAV TEXT BUG
+   ========================== */
+
+/* Force header to contain floating mobile nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  overflow: hidden;   /* ✅ prevents menu from rendering outside header */
+}
+
+/* Ensure mobile menu never renders unless open */
+.nav-menu-mobile {
+  display: none !important;   /* ✅ hard-hide by default */
+  width: 100%;
+}
+
+/* Only show when toggled */
+.nav-menu-mobile.open {
+  display: block !important;
+}
+
+/* Prevent ghost text layout bug on iOS / Chrome */
+.nav-menu-mobile,
+.nav-menu-mobile * {
+  visibility: visible;
+  position: relative;
+}
+
+/* Prevent accidental stacking bugs */
+.page {
+  overflow-x: hidden;
+}
+
 
     .mt-1 { margin-top: 4px; }
     .mt-2 { margin-top: 8px; }
@@ -1168,7 +1204,7 @@
           </div>
           <div class="nav-title">
             <span class="nav-title-main">GBL Servers</span>
-            <span class="nav-title-sub">Regenerative GPU Compute — Ann Arbor</span>
+            <span class="nav-title-sub">Regenerative GPU Compute, Ann Arbor</span>
           </div>
         </a>
 
@@ -1221,7 +1257,7 @@
             </h1>
 
             <p class="hero-subheading">
-              High-performance NVIDIA GPUs located in Michigan for fast, secure AI development —
+              High-performance NVIDIA GPUs located in Michigan for fast, secure AI development -
               while strengthening local forests and removing more carbon than we produce.
             </p>
 
@@ -1306,7 +1342,7 @@
           </div>
           <p class="section-subtitle">
             Designed for teams that need real GPU power, local collaboration, and a tangible
-            climate-positive impact — without hyperscaler complexity.
+            climate-positive impact - without hyperscaler complexity.
           </p>
         </div>
 
@@ -1348,7 +1384,7 @@
             </div>
             <div class="card-body">
               Our model removes more carbon than we produce by funding Michigan forest restoration
-              and protection projects — turning compute into a local climate asset.
+              and protection projects - turning compute into a local climate asset.
             </div>
             <div class="chip-row">
               <span class="chip chip-accent">Net carbon-negative</span>
@@ -1358,7 +1394,7 @@
         </div>
 
         <div class="mt-3 text-xs muted">
-          Simple monthly and annual contracts — no surprise line items, no multi-cloud sprawl.
+          Simple monthly and annual contracts - no surprise line items, no multi-cloud sprawl.
         </div>
       </div>
     </section>
@@ -1469,7 +1505,7 @@
           <div class="pricing-card">
             <h3 style="margin: 0 0 8px; font-size: 16px;">Flexible commercial options</h3>
             <p class="muted">
-              Choose how you engage with GBL Servers — from shorter pilot runs to fully reserved,
+              Choose how you engage with GBL Servers - from shorter pilot runs to fully reserved,
               dedicated capacity.
             </p>
 
@@ -1638,7 +1674,7 @@
           </div>
           <p class="section-subtitle">
             GBL Servers is an Ann Arbor GPU compute provider delivering secure, local access to AI
-            infrastructure — with a mission to improve Michigan’s natural systems.
+            infrastructure - with a mission to improve Michigan’s natural systems.
           </p>
         </div>
 
@@ -1663,7 +1699,7 @@
             <div class="highlight-box">
               <strong>Regenerative compute in practice</strong>
               <div class="mt-1 text-xs">
-                For every GPU we deploy, we commit a portion of profits to Michigan-based forest projects —
+                For every GPU we deploy, we commit a portion of profits to Michigan-based forest projects -
                 ensuring your AI workloads fund real, measurable ecological improvements close to home.
               </div>
             </div>
@@ -1690,7 +1726,7 @@
               <li><span class="chevron">↘</span><span>10+ years in full-stack, embedded, and advanced connectivity systems.</span></li>
               <li><span class="chevron">↘</span><span>Built Ford AV systems and led high-precision GPS &amp; 5G projects.</span></li>
               <li><span class="chevron">↘</span><span>Expertise in wireless comms, GNSS, RF, and cybersecurity.</span></li>
-              <li><span class="chevron">↘</span><span>BSE ECE + CIS Minor, MSEE — University of Michigan.</span></li>
+              <li><span class="chevron">↘</span><span>BSE ECE + CIS Minor, MSEE - University of Michigan.</span></li>
             </ul>
 
             <div class="skills-grid mt-2" aria-label="Skills and support services">
@@ -1722,7 +1758,7 @@
     <div class="shell">
       <div class="footer-row">
         <div class="footer-main">
-          <strong>GBL Servers — Ann Arbor, Michigan</strong>
+          <strong>GBL Servers - Ann Arbor, Michigan</strong>
           <span class="footer-tagline">Regenerative Compute, Net Carbon-Negative by Design</span>
           <span class="text-xs">A division of GBL Services LLC</span>
         </div>
