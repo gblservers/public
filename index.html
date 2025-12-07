@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GBL Servers — Regenerative GPU Compute in Ann Arbor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GBL Servers provides local, net carbon-negative NVIDIA GPU compute in Ann Arbor, Michigan for AI and ML workloads.">
+  <style>
+    :root {
+      --bg: #050810;
+      --bg-elevated: #0b0f1f;
+      --bg-soft: #111727;
+      --accent: #4fd1c5;
+      --accent-soft: rgba(79, 209, 197, 0.2);
+      --accent-strong: #38b2ac;
+      --accent-warm: #f6ad55;
+      --text: #f7fafc;
+      --text-soft: #a0aec0;
+      --border-subtle: rgba(255,255,255,0.06);
+      --danger: #f56565;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.55);
+      --shadow-subtle: 0 10px 24px rgba(0,0,0,0.35);
+      --nav-height: 72px;
+      --max-width: 1100px;
+      --transition-fast: 0.18s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top left, #1a202c 0, #050810 40%, #020309 100%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout */
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 56px 0;
+      }
+    }
+
+    .section-header {
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 650;
+      letter-spacing: 0.02em;
+    }
+
+    .section-subtitle {
+      color: var(--text-soft);
+      max-width: 420px;
+      font-size: 14px;
+    }
+
+    /* Nav */
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(24px);
+      background: rgba(5, 8, 16, 0.86);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .nav-inner {
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.7);
+    }
+
+    .nav-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-title-main {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .nav-title-sub {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+    }
+
+    .nav-link {
+      color: var(--text-soft);
+      padding: 6px 0;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-warm));
+      opacity: 0;
+      transform: scaleX(0.4);
+      transform-origin: center;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-link:hover::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-toggle {
+      display: none;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 10px;
+      font-size: 11px;
+      background: transparent;
+      color: var(--text-soft);
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 840px) {
+      .nav-links {
+        display: none;
+      }
+      .nav-cta {
+        display: none;
+      }
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+      .nav-menu-mobile {
+        display: none;
+        border-top: 1px solid rgba(255,255,255,0.05);
+      }
+      .nav-menu-mobile.open {
+        display: block;
+      }
+      .nav-menu-mobile-inner {
+        padding: 10px 0 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .nav-menu-mobile a {
+        padding: 6px 4px;
+        font-size: 14px;
+        color: var(--text-soft);
+      }
+      .nav-menu-mobile .btn {
+        margin-top: 6px;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Buttons */
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      background: none;
+      color: var(--text);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 22px 50px rgba(0,0,0,0.7);
+    }
+
+    .btn-ghost {
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-soft);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.45);
+      color: var(--text);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .btn-outline {
+      border-color: var(--accent-soft);
+      background: rgba(5, 10, 20, 0.9);
+      color: var(--accent);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      background: rgba(15, 23, 42, 1);
+      color: var(--accent-strong);
+    }
+
+    .btn-pill-label {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(79, 209, 197, 0.5);
+      background: rgba(4, 12, 20, 0.9);
+      color: var(--accent);
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .btn-pill-label span.badge-soft {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(79, 209, 197, 0.13);
+      color: var(--text-soft);
+      border: 1px solid rgba(79, 209, 197, 0.33);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 42px 0 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-heading {
+      font-size: clamp(32px, 4vw, 40px);
+      font-weight: 750;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+      margin: 16px 0 10px;
+    }
+
+    .hero-highlight {
+  background: linear-gradient(90deg, #4fd1c5, #38b2ac, #f6ad55);
+  background-size: 200% auto;
+  background-position: 0% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  text-shadow:
+    0 0 6px rgba(79, 209, 197, 0.35),
+    0 0 14px rgba(56, 178, 172, 0.35),
+    0 0 24px rgba(246, 173, 85, 0.25);
+
+  animation: glowShift 6s ease infinite;
+}
+
+@keyframes glowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+    .hero-subheading {
+      font-size: 16px;
+      color: var(--text-soft);
+      max-width: 520px;
+      margin-bottom: 22px;
+    }
+
+    .hero-footnote {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-footnote strong {
+      color: var(--accent);
+    }
+
+    .hero-metadata {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 20px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .hero-meta-chip {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      padding: 6px 9px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .hero-meta-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(79,209,197,0.2);
+    }
+
+    .hero-meta-dot-warm {
+      background: var(--accent-warm);
+      box-shadow: 0 0 0 6px rgba(246,173,85,0.2);
+    }
+
+    .hero-card {
+      border-radius: 24px;
+      padding: 18px 18px 20px;
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, rgba(79,209,197,0.16), transparent 50%), rgba(10,15,30,0.98);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.97);
+      color: var(--text-soft);
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .hero-card-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.75);
+    }
+
+    .hero-card-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-card-title-main {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-card-title-sub {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+      margin-top: 6px;
+    }
+
+    .stat-card {
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top left, rgba(79,209,197,0.1), transparent 60%), rgba(15,23,42,0.9);
+      padding: 8px 8px 9px;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      color: var(--text-soft);
+    }
+
+    .stat-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .stat-pill {
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.35);
+      color: var(--accent);
+      align-self: flex-start;
+      border: 1px solid rgba(45, 212, 191, 0.4);
+    }
+
+    .hero-card-footer {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .hero-card-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .hero-card-list li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .hero-card-list span.bullet {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(156, 163, 175, 0.9);
+    }
+
+    /* Generic card grid */
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 920px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 15, 28, 0.95);
+      padding: 16px 16px 18px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .card-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-soft);
+    }
+
+    .chip-accent {
+      border-color: rgba(79, 209, 197, 0.6);
+      background: rgba(15, 118, 110, 0.25);
+      color: var(--accent);
+    }
+
+    /* Hardware section */
+
+    .hardware-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .hardware-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hardware-main {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, rgba(79,209,197,0.15), transparent 60%), rgba(10, 15, 30, 0.98);
+      padding: 18px 16px 18px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .hardware-main h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .hardware-main p {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .hardware-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 620px) {
+      .hardware-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hardware-item {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.94);
+      padding: 10px 10px 11px;
+      font-size: 12px;
+    }
+
+    .hardware-label {
+      color: var(--text-soft);
+      margin-bottom: 3px;
+    }
+
+    .hardware-value {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .hardware-note {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 6px;
+    }
+
+    .slo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+
+    .slo-pill {
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      padding: 4px 8px;
+      color: var(--text-soft);
+      background: rgba(15, 23, 42, 0.96);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slo-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hardware-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mini-card {
+      border-radius: var(--radius-lg);
+      padding: 12px 12px 13px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 15, 30, 0.98);
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    /* Pricing section */
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .pricing-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pricing-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, rgba(246,173,85,0.16), transparent 60%), rgba(10, 15, 30, 0.98);
+      padding: 18px 16px 18px;
+      box-shadow: var(--shadow-subtle);
+      font-size: 13px;
+    }
+
+    .pricing-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 620px) {
+      .pricing-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pricing-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .badge-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-soft);
+    }
+
+    .badge-pill-accent {
+      border-color: rgba(79,209,197,0.6);
+      color: var(--accent);
+    }
+
+    /* Forms */
+
+    .section-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.1fr);
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .section-split {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card-form {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 15, 30, 0.98);
+      padding: 18px 16px 18px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 620px) {
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+    }
+
+    .form-label {
+      color: var(--text-soft);
+    }
+
+    .form-required {
+      color: var(--danger);
+      margin-left: 3px;
+    }
+
+    .form-control,
+    .form-textarea {
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.98);
+      padding: 9px 10px;
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      resize: vertical;
+      min-height: 42px;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    .form-textarea {
+      min-height: 86px;
+    }
+
+    .form-control:focus,
+    .form-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(79,209,197,0.4);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .form-hint {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    .form-footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .form-status-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.96);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(79,209,197,0.2);
+    }
+
+    /* About / Technical Lead */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .about-text {
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .about-text p {
+      margin: 0 0 10px;
+    }
+
+    .highlight-box {
+      margin-top: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(79, 209, 197, 0.5);
+      background: rgba(15, 23, 42, 0.98);
+      padding: 10px 10px 11px;
+      font-size: 12px;
+    }
+
+    .lead-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 15, 30, 0.98);
+      padding: 16px 16px 18px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .lead-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .lead-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.85);
+    }
+
+    .lead-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .lead-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .lead-role {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .lead-tagline {
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    .lead-body {
+      font-size: 12px;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .lead-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .lead-list li {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .lead-list span.chevron {
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 620px) {
+      .skills-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .skill-item {
+      font-size: 11px;
+      padding: 7px 8px;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-soft);
+    }
+
+    .skill-item strong {
+      display: block;
+      font-size: 11px;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    /* Footer */
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.24);
+      padding: 20px 0 26px;
+      font-size: 12px;
+      color: var(--text-soft);
+      background: rgba(3, 6, 13, 0.95);
+      margin-top: 20px;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .footer-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .footer-main strong {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .footer-tagline {
+      font-size: 11px;
+    }
+
+    .footer-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .footer-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(79, 209, 197, 0.5);
+      font-size: 11px;
+      color: var(--accent);
+      background: rgba(4, 12, 20, 0.96);
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .footer-contact {
+      font-size: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-contact a {
+      color: var(--accent);
+    }
+
+    /* Utility */
+
+    .muted {
+      color: var(--text-soft);
+    }
+
+    .text-sm {
+      font-size: 12px;
+    }
+
+    .text-xs {
+      font-size: 11px;
+    }
+
+    .mt-1 { margin-top: 4px; }
+    .mt-2 { margin-top: 8px; }
+    .mt-3 { margin-top: 12px; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- NAV -->
+  <header class="nav">
+    <div class="shell">
+      <div class="nav-inner">
+        <a href="#top" class="nav-brand">
+          <div class="nav-logo">
+            <img src="https://picsum.photos/200?random=1" alt="GBL Servers logo">
+          </div>
+          <div class="nav-title">
+            <span class="nav-title-main">GBL Servers</span>
+            <span class="nav-title-sub">Regenerative GPU Compute — Ann Arbor</span>
+          </div>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#benefits" class="nav-link">Why GBL</a>
+          <a href="#hardware" class="nav-link">Hardware</a>
+          <a href="#pricing" class="nav-link">Pricing</a>
+          <a href="#access" class="nav-link">Request Access</a>
+          <a href="#about" class="nav-link">About</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a href="#book-call" class="btn btn-ghost">Book a Call</a>
+          <a href="#access" class="btn btn-primary">Request Access</a>
+        </div>
+
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" id="navToggle">
+          Menu <span>☰</span>
+        </button>
+      </div>
+
+      <div class="nav-menu-mobile" id="navMobile">
+        <div class="nav-menu-mobile-inner">
+          <a href="#benefits">Why GBL</a>
+          <a href="#hardware">Hardware</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#access">Request Access</a>
+          <a href="#about">About</a>
+          <a href="#book-call" class="btn btn-ghost">Book a Call</a>
+          <a href="#access" class="btn btn-primary">Request Access</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell">
+        <div class="hero-grid">
+          <div>
+            <div class="btn-pill-label">
+              Local GPU Compute for Ann Arbor
+              <span class="badge-soft">Net Carbon-Negative</span>
+            </div>
+
+            <h1 class="hero-heading" id="hero-title">
+              <span class="hero-highlight">GBL Servers</span><br>
+              Local, Regenerative GPU Infrastructure
+            </h1>
+
+            <p class="hero-subheading">
+              High-performance NVIDIA GPUs located in Michigan for fast, secure AI development —
+              while strengthening local forests and removing more carbon than we produce.
+            </p>
+
+            <div class="btn-row">
+              <a href="#access" class="btn btn-primary">Request Access</a>
+              <a href="#book-call" class="btn btn-outline">Book a Call</a>
+            </div>
+
+            <div class="hero-footnote">
+              <span class="hero-meta-dot"></span>
+              <span><strong>Ann Arbor–based</strong> | A division of GBL Services LLC</span>
+            </div>
+
+            <div class="hero-metadata">
+              <div class="hero-meta-chip">
+                <span class="hero-meta-dot"></span>
+                <span>RTX 6000 Ada–class GPUs</span>
+              </div>
+              <div class="hero-meta-chip">
+                <span class="hero-meta-dot-warm"></span>
+                <span>Net carbon-negative via Michigan forest restoration</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="Deployment overview">
+            <div class="hero-card-tag">Deployment Snapshot</div>
+            <div class="hero-card-header">
+              <div class="hero-card-avatar">
+                <img src="https://picsum.photos/200?random=2" alt="Server hardware">
+              </div>
+              <div class="hero-card-title">
+                <span class="hero-card-title-main">Ann Arbor GPU Node</span>
+                <span class="hero-card-title-sub">Datacenter-grade, locally engineered</span>
+              </div>
+            </div>
+
+            <div class="hero-card-grid">
+              <div class="stat-card">
+                <div class="stat-label">Availability</div>
+                <div class="stat-value">Under 45 days</div>
+                <div class="stat-pill">8-GPU node provisioning</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Performance class</div>
+                <div class="stat-value">RTX 6000 Ada</div>
+                <div class="stat-pill">L40-class capability</div>
+              </div>
+            </div>
+
+            <ul class="hero-card-list">
+              <li>
+                <span class="bullet"></span>
+                <span>Local engineering, low-latency access from Michigan.</span>
+              </li>
+              <li>
+                <span class="bullet"></span>
+                <span>Secure, single-tenant options for regulated workloads.</span>
+              </li>
+              <li>
+                <span class="bullet"></span>
+                <span>Regenerative model funds Michigan forest protection.</span>
+              </li>
+            </ul>
+
+            <div class="hero-card-footer">
+              <span>Ideal for AI/ML training, fine-tuning, and inference.</span>
+              <a href="#pricing" class="text-xs" style="color: var(--accent);">View pricing overview →</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY BENEFITS -->
+    <section id="benefits" aria-labelledby="benefits-title">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Why GBL Servers</div>
+            <h2 class="section-title" id="benefits-title">Local compute, global-grade performance</h2>
+          </div>
+          <p class="section-subtitle">
+            Designed for teams that need real GPU power, local collaboration, and a tangible
+            climate-positive impact — without hyperscaler complexity.
+          </p>
+        </div>
+
+        <div class="grid-3" role="list">
+          <article class="card" role="listitem">
+            <div class="card-header">
+              <div class="card-icon">⚡</div>
+              <div class="card-title">Local engineering &amp; low latency</div>
+            </div>
+            <div class="card-body">
+              Deploy AI workloads with responsive, low-latency access from Michigan. Work directly
+              with local engineers who understand your environment and constraints.
+            </div>
+            <div class="chip-row">
+              <span class="chip chip-accent">Ann Arbor presence</span>
+              <span class="chip">Latency-optimized routing</span>
+            </div>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="card-header">
+              <div class="card-icon">🧠</div>
+              <div class="card-title">NVIDIA GPU power for AI/ML</div>
+            </div>
+            <div class="card-body">
+              Datacenter-grade NVIDIA RTX 6000 Ada / L40-class GPUs, designed for training,
+              fine-tuning, and high-throughput inference across modern AI stacks.
+            </div>
+            <div class="chip-row">
+              <span class="chip">PyTorch &amp; TensorFlow</span>
+              <span class="chip">LLM &amp; vision workloads</span>
+            </div>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="card-header">
+              <div class="card-icon">🌲</div>
+              <div class="card-title">Regenerative &amp; carbon-negative</div>
+            </div>
+            <div class="card-body">
+              Our model removes more carbon than we produce by funding Michigan forest restoration
+              and protection projects — turning compute into a local climate asset.
+            </div>
+            <div class="chip-row">
+              <span class="chip chip-accent">Net carbon-negative</span>
+              <span class="chip">Michigan forest restoration</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="mt-3 text-xs muted">
+          Simple monthly and annual contracts — no surprise line items, no multi-cloud sprawl.
+        </div>
+      </div>
+    </section>
+
+    <!-- HARDWARE & AVAILABILITY -->
+    <section id="hardware" aria-labelledby="hardware-title">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Hardware &amp; Availability</div>
+            <h2 class="section-title" id="hardware-title">8-GPU nodes, delivered fast</h2>
+          </div>
+          <p class="section-subtitle">
+            Start with a single 8-GPU node and scale to larger clusters over time. Annual clients
+            can request custom GPU configurations and dedicated infrastructure.
+          </p>
+        </div>
+
+        <div class="hardware-layout">
+          <div class="hardware-main">
+            <h3>Production-ready GPU node</h3>
+            <p>
+              A standard deployment is an <strong>8-GPU node</strong> with RTX 6000 Ada / L40-class
+              performance, ready in under 45 days for qualified clients.
+            </p>
+
+            <div class="hardware-row">
+              <div class="hardware-item">
+                <div class="hardware-label">Provisioning timeline</div>
+                <div class="hardware-value">Under 45 days</div>
+                <div class="hardware-note">From signed agreement for a standard 8-GPU node.</div>
+              </div>
+              <div class="hardware-item">
+                <div class="hardware-label">Performance class</div>
+                <div class="hardware-value">RTX 6000 Ada / L40</div>
+                <div class="hardware-note">Optimized for modern training &amp; inference workloads.</div>
+              </div>
+            </div>
+
+            <div class="hardware-row">
+              <div class="hardware-item">
+                <div class="hardware-label">Scaling model</div>
+                <div class="hardware-value">Cluster-ready</div>
+                <div class="hardware-note">Scale from a single node to multi-node clusters as needed.</div>
+              </div>
+              <div class="hardware-item">
+                <div class="hardware-label">Custom builds</div>
+                <div class="hardware-value">Annual clients</div>
+                <div class="hardware-note">Custom GPU procurement and configurations available.</div>
+              </div>
+            </div>
+
+            <div class="slo-row">
+              <div class="slo-pill">
+                <span class="slo-dot"></span>
+                <span>SLO-based access windows &amp; maintenance</span>
+              </div>
+              <div class="slo-pill">
+                <span class="slo-dot"></span>
+                <span>Secure connectivity &amp; isolation options</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hardware-side">
+            <div class="mini-card">
+              <strong>Fit for your workloads</strong>
+              <p class="mt-1">
+                Ideal for:
+              </p>
+              <ul class="hero-card-list">
+                <li><span class="bullet"></span><span>LLM training, fine-tuning, and RAG systems.</span></li>
+                <li><span class="bullet"></span><span>Computer vision, robotics, and simulation.</span></li>
+                <li><span class="bullet"></span><span>High-throughput batch inference pipelines.</span></li>
+              </ul>
+            </div>
+            <div class="mini-card">
+              <strong>Security &amp; connectivity</strong>
+              <p class="mt-1">
+                Options for dedicated or shared infrastructure, private networking, and integration
+                with your existing security controls.
+              </p>
+              <div class="chip-row">
+                <span class="chip">Local operator</span>
+                <span class="chip">High-availability design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING OVERVIEW & BOOK A CALL -->
+    <section id="pricing" aria-labelledby="pricing-title">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Pricing Overview</div>
+            <h2 class="section-title" id="pricing-title">Simple terms, tailored to your workloads</h2>
+          </div>
+          <p class="section-subtitle">
+            Final pricing is based on hardware configuration, reservation term, and workload profile.
+            We start with a short call to match you to the right model.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <h3 style="margin: 0 0 8px; font-size: 16px;">Flexible commercial options</h3>
+            <p class="muted">
+              Choose how you engage with GBL Servers — from shorter pilot runs to fully reserved,
+              dedicated capacity.
+            </p>
+
+            <div class="pricing-row">
+              <div class="hardware-item">
+                <div class="hardware-label">Monthly &amp; quarterly</div>
+                <div class="hardware-value">Project-based access</div>
+                <div class="hardware-note">
+                  Ideal for evaluations, pilots, and bursty workloads where flexibility matters.
+                </div>
+              </div>
+              <div class="hardware-item">
+                <div class="hardware-label">Annual reservations</div>
+                <div class="hardware-value">Dedicated GPUs</div>
+                <div class="hardware-note">
+                  Reserved, dedicated GPUs with the option for custom hardware procurement.
+                </div>
+              </div>
+            </div>
+
+            <div class="pricing-badge-row">
+              <span class="badge-pill badge-pill-accent">Annual = reserved/dedicated GPUs</span>
+              <span class="badge-pill">Custom GPU procurement available</span>
+              <span class="badge-pill">Transparent monthly invoicing</span>
+            </div>
+
+            <div class="mt-3 btn-row">
+              <a href="#book-call" class="btn btn-primary">Book a Call</a>
+              <a href="#access" class="btn btn-ghost">Request Custom GPU Quote</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon">📅</div>
+              <div class="card-title">15–30 minute intro call</div>
+            </div>
+            <div class="card-body">
+              In a short call we’ll:
+              <ul class="hero-card-list" style="margin-top: 8px;">
+                <li><span class="bullet"></span><span>Understand your workloads and timelines.</span></li>
+                <li><span class="bullet"></span><span>Review hardware options and reservation terms.</span></li>
+                <li><span class="bullet"></span><span>Outline security &amp; connectivity requirements.</span></li>
+                <li><span class="bullet"></span><span>Provide a clear next-step proposal.</span></li>
+              </ul>
+              <p class="mt-2 text-xs muted">
+                No obligation. We’ll only recommend a configuration we’d deploy for our own workloads.
+              </p>
+              <div class="mt-2">
+                <a href="#book-call" class="btn btn-outline">Schedule call →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOK A CALL / REQUEST ACCESS -->
+<section id="book-call" aria-labelledby="book-title">
+  <div class="shell">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Connect</div>
+        <h2 class="section-title" id="book-title">Book a call &amp; request access</h2>
+      </div>
+      <p class="section-subtitle">
+        A quick 15–30 minute conversation to align on workloads, timelines, and availability.
+        From there, we move straight into planning a deployment.
+      </p>
+    </div>
+
+    <div class="section-split" id="access">
+      <!-- Book a call -->
+      <article class="card-form" aria-labelledby="call-heading">
+        <h3 id="call-heading" style="margin: 0 0 8px; font-size: 16px;">Book a call</h3>
+        <p class="text-sm muted">
+          Use the calendar link below to choose a time that works for you. If you prefer,
+          you can also call directly.
+        </p>
+
+        <div class="mt-2">
+          <a href="https://calendly.com/vlad1456-gbl" target="_blank" rel="noopener" class="btn btn-primary">
+            Open Calendly (placeholder)
+          </a>
+        </div>
+
+        <div class="mt-2 text-sm muted">
+          Or call: <strong>734-726-4216</strong>
+        </div>
+
+        <div class="highlight-box mt-2">
+          <strong>What to have ready</strong>
+          <div class="mt-1 text-xs">
+            A rough sense of your workload type (LLMs, vision, simulation, etc.), timeline, and whether
+            you prefer a flexible or reserved model. We’ll handle the infrastructure details.
+          </div>
+        </div>
+      </article>
+
+      <!-- Request access form -->
+      <article class="card-form" aria-labelledby="access-heading">
+        <h3 id="access-heading" style="margin: 0 0 8px; font-size: 16px;">Request access</h3>
+        <p class="text-sm muted">
+          Tell us about your organization and what you’re planning to run. We’ll follow up with
+          availability and next steps.
+        </p>
+
+        <form action="https://formspree.io/f/xwpgqgqp" method="POST" class="mt-2">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="name">Name<span class="form-required">*</span></label>
+              <input class="form-control" type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email<span class="form-required">*</span></label>
+              <input class="form-control" type="email" id="email" name="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+
+          <div class="form-grid mt-2">
+            <div class="form-group">
+              <label class="form-label" for="org">Organization / Project<span class="form-required">*</span></label>
+              <input class="form-control" type="text" id="org" name="organization" placeholder="Company, lab, or project" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="timeline">Rough timeline</label>
+              <input class="form-control" type="text" id="timeline" name="timeline" placeholder="e.g., Q1 pilot, 6–12 month reservation">
+            </div>
+          </div>
+
+          <div class="form-group mt-2">
+            <label class="form-label" for="workload">What will you be running?<span class="form-required">*</span></label>
+            <textarea class="form-textarea" id="workload" name="message" required
+              placeholder="Briefly describe your workloads (e.g., LLM fine-tuning, diffusion models, robotics sim, etc.)"></textarea>
+            <div class="form-hint">
+              Helpful details: frameworks, typical batch sizes, expected GPU hours per month, data locality or security constraints.
+            </div>
+          </div>
+
+          <!-- Optional metadata -->
+          <input type="hidden" name="_subject" value="New GBL Servers Request Access">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_gotcha" style="display:none">
+
+          <div class="form-footer-row">
+            <div class="form-status-pill">
+              <span class="status-dot"></span>
+              <span>We typically respond within one business day.</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+          </div>
+        </form>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+    <!-- ABOUT / TECHNICAL LEAD -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">About</div>
+            <h2 class="section-title" id="about-title">Ann Arbor–built, regeneration-focused</h2>
+          </div>
+          <p class="section-subtitle">
+            GBL Servers is an Ann Arbor GPU compute provider delivering secure, local access to AI
+            infrastructure — with a mission to improve Michigan’s natural systems.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <article class="about-text">
+            <p>
+              <strong>GBL Servers</strong> is an Ann Arbor GPU compute provider delivering secure, local access
+              to AI infrastructure. We serve teams that need real GPU power, close collaboration, and
+              infrastructure they can understand end-to-end.
+            </p>
+            <p>
+              Our <strong>regenerative model</strong> removes more carbon than we produce by improving Michigan
+              forest ecosystems and protecting local natural resources. A portion of profits directly supports
+              forest restoration, conservation, and long-term stewardship in the region.
+            </p>
+            <p>
+              We treat each deployment as a long-term partnership: tuning hardware to workloads, aligning
+              security and connectivity requirements, and ensuring that the compute you rely on is backing
+              a healthier local environment.
+            </p>
+
+            <div class="highlight-box">
+              <strong>Regenerative compute in practice</strong>
+              <div class="mt-1 text-xs">
+                For every GPU we deploy, we commit a portion of profits to Michigan-based forest projects —
+                ensuring your AI workloads fund real, measurable ecological improvements close to home.
+              </div>
+            </div>
+          </article>
+
+          <aside class="lead-card" aria-labelledby="lead-title">
+            <div class="lead-header">
+              <div class="lead-avatar">
+                <img src="https://picsum.photos/200?random=3" alt="Technical Lead">
+              </div>
+              <div class="lead-title">
+                <div class="lead-name">Vlad</div>
+                <div class="lead-role">Director of Infrastructure &amp; Systems Engineering</div>
+                <div class="lead-tagline">Technical lead across complex, high-stakes environments</div>
+              </div>
+            </div>
+
+            <div class="lead-body">
+              Vlad oversees the design and operation of GBL Servers’ GPU infrastructure, drawing on a decade
+              of experience in full-stack, embedded, and advanced connectivity systems.
+            </div>
+
+            <ul class="lead-list" aria-label="Experience highlights">
+              <li><span class="chevron">↘</span><span>10+ years in full-stack, embedded, and advanced connectivity systems.</span></li>
+              <li><span class="chevron">↘</span><span>Built Ford AV systems and led high-precision GPS &amp; 5G projects.</span></li>
+              <li><span class="chevron">↘</span><span>Expertise in wireless comms, GNSS, RF, and cybersecurity.</span></li>
+              <li><span class="chevron">↘</span><span>BSE ECE + CIS Minor, MSEE — University of Michigan.</span></li>
+            </ul>
+
+            <div class="skills-grid mt-2" aria-label="Skills and support services">
+              <div class="skill-item">
+                <strong>Infrastructure design</strong>
+                GPU cluster design, networking, and observability tailored to your workloads.
+              </div>
+              <div class="skill-item">
+                <strong>Security &amp; connectivity</strong>
+                Guidance on isolation, access controls, VPN/private links, and compliance alignment.
+              </div>
+              <div class="skill-item">
+                <strong>AI workload tuning</strong>
+                Practical recommendations for model training, fine-tuning, and inference efficiency.
+              </div>
+              <div class="skill-item">
+                <strong>Systems integration</strong>
+                Integrating on-prem workloads with your existing cloud and data infrastructure.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="shell">
+      <div class="footer-row">
+        <div class="footer-main">
+          <strong>GBL Servers — Ann Arbor, Michigan</strong>
+          <span class="footer-tagline">Regenerative Compute, Net Carbon-Negative by Design</span>
+          <span class="text-xs">A division of GBL Services LLC</span>
+        </div>
+
+        <div class="footer-badges">
+          <div class="footer-badge">
+            🌲 A portion of profits protects Michigan forests
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <span>📞 <a href="tel:+17347264216">+1-828-888-8826</a></span>
+          <span>•</span>
+          <span><a href="#book-call">Book a call</a></span>
+          <span>•</span>
+          <span><a href="#access">Request access</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Simple smooth scroll for anchor links
+  document.addEventListener('click', function (e) {
+    const target = e.target.closest('a[href^="#"]');
+    if (!target) return;
+    const id = target.getAttribute('href').slice(1);
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navMobile = document.getElementById('navMobile');
+  if (navToggle && navMobile) {
+    navToggle.addEventListener('click', function () {
+      navMobile.classList.toggle('open');
+    });
+    navMobile.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        navMobile.classList.remove('open');
+      }
+    });
+  }
+</script>
+</body>
+</html>
