@@ -1198,6 +1198,115 @@
 
 
 
+
+
+
+
+
+/* FULL-WIDTH HERO LOGO BAR */
+
+.ecosystem-bar {
+  width: 100%;
+  margin-top: 42px;   /* ✅ adds breathing room above logos */
+  margin-bottom: 0;
+  padding: 20px 0;    /* ✅ thicker bar feel */
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  /* ✅ neutral gradient readable for ALL logo colors */
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.85),
+    rgba(245,247,250,0.95),
+    rgba(255,255,255,0.85)
+  );
+
+  backdrop-filter: blur(4px);
+}
+
+
+
+
+.ecosystem-bar-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+
+
+
+.ecosystem-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-soft);
+  white-space: nowrap;
+}
+
+.ecosystem-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+
+
+.ecosystem-logos img {
+  height: 22px;
+  opacity: 0.75;
+  //filter: grayscale(100%);
+  transition: opacity 0.15s ease, filter 0.15s ease;
+}
+
+.ecosystem-logos img:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.18)); /* ✅ clarity on hover */
+}
+
+@media (max-width: 600px) {
+  .ecosystem-bar-inner {
+    justify-content: center;
+  }
+
+  .ecosystem-label {
+    display: none;
+  }
+
+  .ecosystem-logos {
+    justify-content: center;
+    gap: 14px;
+  }
+}
+
+.ecosystem-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(79,209,197,0.08), transparent 70%);
+  pointer-events: none;
+}
+
+
+
+
+/* FIX GIANT GAP BELOW LOGO STRIP */
+.hero {
+  padding-bottom: 0px !important;
+}
+
+section#benefits {
+  padding-top: 32px !important;
+}
+
+
+
+
     .mt-1 { margin-top: 4px; }
     .mt-2 { margin-top: 8px; }
     .mt-3 { margin-top: 12px; }
@@ -1293,6 +1402,14 @@
               </div>
             </div>
           </div>
+		  
+		  
+
+
+
+
+		  
+		  
 
           <aside class="hero-card" aria-label="Deployment overview">
             <div class="hero-card-tag">Deployment Snapshot</div>
@@ -1339,9 +1456,36 @@
               <a href="#pricing" class="text-xs" style="color: var(--accent);">View pricing overview →</a>
             </div>
           </aside>
-        </div>
-      </div>
-    </section>
+        
+		
+		
+		
+		</div> <!-- closes .hero-grid -->
+
+<!-- ECOSYSTEM LOGO BAR -->
+<div class="ecosystem-bar">
+  <div class="shell">
+    <div class="ecosystem-bar-inner">
+      <!--span class="ecosystem-label">Built on</span-->
+
+      <div class="ecosystem-logos">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/NVIDIA_logo.svg/2560px-NVIDIA_logo.svg.png" alt="NVIDIA">
+  <img src="https://cdn.freebiesupply.com/logos/large/2x/ubuntu-1-logo-png-transparent.png" alt="Ubuntu">
+  <img src="https://github.com/gblservers/public/blob/main/docker-logo-blue.png?raw=true" alt="Docker">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/Kubernetes_logo.svg" alt="Kubernetes">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Pytorch_logo.png" alt="PyTorch">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Vmware.svg/1280px-Vmware.svg.png" alt="VMware">
+</div>
+
+    </div>
+  </div>
+</div>
+
+</div> <!-- closes .shell -->
+</section>
+
+		
+		
 
     <!-- KEY BENEFITS -->
     <section id="benefits" aria-labelledby="benefits-title">
@@ -1759,6 +1903,14 @@
         </div>
       </div>
     </section>
+	
+	
+	
+
+
+	
+	
+	
   </main>
 
   <!-- FOOTER -->
