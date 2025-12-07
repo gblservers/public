@@ -1334,8 +1334,9 @@ section#benefits {
           <a href="#benefits" class="nav-link">Why GBL</a>
           <a href="#hardware" class="nav-link">Hardware</a>
           <a href="#pricing" class="nav-link">Pricing</a>
-          <a href="#access" class="nav-link">Request Access</a>
+          
           <a href="#about" class="nav-link">About</a>
+		  <a href="#access" class="nav-link">Request Access</a>
         </nav>
 
         <div class="nav-cta">
@@ -1353,8 +1354,9 @@ section#benefits {
           <a href="#benefits">Why GBL</a>
           <a href="#hardware">Hardware</a>
           <a href="#pricing">Pricing</a>
+		  <a href="#about">About</a>
           <a href="#access">Request Access</a>
-          <a href="#about">About</a>
+          
           <a href="#book-call" class="btn btn-ghost">Book a Call</a>
           <a href="#access" class="btn btn-primary">Request Access</a>
         </div>
@@ -1428,7 +1430,7 @@ section#benefits {
             <div class="hero-card-grid">
               <div class="stat-card">
                 <div class="stat-label">Availability</div>
-                <div class="stat-value">Under X days</div>
+                <div class="stat-value">Under 45 days</div>
                 <div class="stat-pill">8-GPU node provisioning</div>
               </div>
               <div class="stat-card">
@@ -1573,12 +1575,12 @@ section#benefits {
         <div class="hardware-layout">
           <div class="hardware-main">
             <h3>Production-ready GPU node</h3>
-           <p> A standard deployment is an <strong>8-GPU node</strong> with RTX Pro 6000 Server / L40-class performance, ready in under X days for qualified clients. By leveraging <strong>NVIDIA MIG (Multi-Instance GPU)</strong> technology, we can partition each RTX Pro 6000 S into 4 independent 24GB GPU instances, effectively enabling us to serve up to 32 smaller clients or one larger client with greater GPU resource flexibility. </p>
+           <p> A standard deployment is an <strong>8-GPU node</strong> with RTX Pro 6000 Server / L40-class performance, ready in under 45 days for qualified clients. By leveraging <strong>NVIDIA MIG (Multi-Instance GPU)</strong> technology, we can partition each RTX Pro 6000 S into 4 independent 24GB GPU instances, effectively enabling us to serve up to 32 smaller clients or one larger client with greater GPU resource flexibility. </p>
 
             <div class="hardware-row">
               <div class="hardware-item">
                 <div class="hardware-label">Provisioning timeline</div>
-                <div class="hardware-value">Under X days</div>
+                <div class="hardware-value">Under 45 days</div>
                 <div class="hardware-note">From signed agreement for a standard 8-GPU node.</div>
               </div>
               <div class="hardware-item">
@@ -1716,109 +1718,10 @@ section#benefits {
         </div>
       </div>
     </section>
-
-    <!-- BOOK A CALL / REQUEST ACCESS -->
-<section id="book-call" aria-labelledby="book-title">
-  <div class="shell">
-    <div class="section-header">
-      <div>
-        <div class="section-kicker">Connect</div>
-        <h2 class="section-title" id="book-title">Book a call &amp; request access</h2>
-      </div>
-      <p class="section-subtitle">
-        A quick 15–30 minute conversation to align on workloads, timelines, and availability.
-        From there, we move straight into planning a deployment.
-      </p>
-    </div>
-
-    <div class="section-split" id="access">
-      <!-- Book a call -->
-      <article class="card-form" aria-labelledby="call-heading">
-        <h3 id="call-heading" style="margin: 0 0 8px; font-size: 16px;">Book a call</h3>
-        <p class="text-sm muted">
-          Use the calendar link below to choose a time that works for you. If you prefer,
-          you can also call directly.
-        </p>
-
-        <div class="mt-2">
-          <a href="https://calendly.com/vlad1456-gbl" target="_blank" rel="noopener" class="btn btn-primary">
-            Open Calendly (placeholder)
-          </a>
-        </div>
-
-        <div class="mt-2 text-sm muted">
-          Or call: <strong>734-726-4216</strong>
-        </div>
-
-        <div class="highlight-box mt-2">
-          <strong>What to have ready</strong>
-          <div class="mt-1 text-xs">
-            A rough sense of your workload type (LLMs, vision, simulation, etc.), timeline, and whether
-            you prefer a flexible or reserved model. We’ll handle the infrastructure details.
-          </div>
-        </div>
-      </article>
-
-      <!-- Request access form -->
-      <article class="card-form" aria-labelledby="access-heading">
-        <h3 id="access-heading" style="margin: 0 0 8px; font-size: 16px;">Request access</h3>
-        <p class="text-sm muted">
-          Tell us about your organization and what you’re planning to run. We’ll follow up with
-          availability and next steps.
-        </p>
-
-        <form action="https://formspree.io/f/xwpgqgqp" method="POST" class="mt-2">
-          <div class="form-grid">
-            <div class="form-group">
-              <label class="form-label" for="name">Name<span class="form-required">*</span></label>
-              <input class="form-control" type="text" id="name" name="name" placeholder="Your name" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="email">Email<span class="form-required">*</span></label>
-              <input class="form-control" type="email" id="email" name="email" placeholder="you@company.com" required>
-            </div>
-          </div>
-
-          <div class="form-grid mt-2">
-            <div class="form-group">
-              <label class="form-label" for="org">Organization / Project<span class="form-required">*</span></label>
-              <input class="form-control" type="text" id="org" name="organization" placeholder="Company, lab, or project" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="timeline">Rough timeline</label>
-              <input class="form-control" type="text" id="timeline" name="timeline" placeholder="e.g., Q1 pilot, 6–12 month reservation">
-            </div>
-          </div>
-
-          <div class="form-group mt-2">
-            <label class="form-label" for="workload">What will you be running?<span class="form-required">*</span></label>
-            <textarea class="form-textarea" id="workload" name="message" required
-              placeholder="Briefly describe your workloads (e.g., LLM fine-tuning, diffusion models, robotics sim, etc.)"></textarea>
-            <div class="form-hint">
-              Helpful details: frameworks, typical batch sizes, expected GPU hours per month, data locality or security constraints.
-            </div>
-          </div>
-
-          <!-- Optional metadata -->
-          <input type="hidden" name="_subject" value="New GBL Servers Request Access">
-          <input type="hidden" name="_template" value="table">
-          <input type="text" name="_gotcha" style="display:none">
-
-          <div class="form-footer-row">
-            <div class="form-status-pill">
-              <span class="status-dot"></span>
-              <span>We typically respond within one business day.</span>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit Request</button>
-          </div>
-        </form>
-      </article>
-    </div>
-  </div>
-</section>
-
-
-    <!-- ABOUT / TECHNICAL LEAD -->
+	
+	
+	
+	 <!-- ABOUT / TECHNICAL LEAD -->
     <section id="about" aria-labelledby="about-title">
       <div class="shell">
         <div class="section-header">
@@ -1905,6 +1808,118 @@ section#benefits {
         </div>
       </div>
     </section>
+	
+	
+	
+	
+
+    <!-- BOOK A CALL / REQUEST ACCESS -->
+<section id="book-call" aria-labelledby="book-title">
+  <div class="shell">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Connect</div>
+        <h2 class="section-title" id="book-title">Book a call &amp; request access</h2>
+      </div>
+      <p class="section-subtitle">
+        A quick 15–30 minute conversation to align on workloads, timelines, and availability.
+        From there, we move straight into planning a deployment.
+      </p>
+    </div>
+
+    <div class="section-split" id="access">
+      <!-- Book a call -->
+      <article class="card-form" aria-labelledby="call-heading">
+        <h3 id="call-heading" style="margin: 0 0 8px; font-size: 16px;">Book a call</h3>
+        <p class="text-sm muted">
+          Use the calendar link below to choose a time that works for you. If you prefer,
+          you can also call directly.
+        </p>
+
+        <div class="mt-2">
+          <a href="https://calendly.com/vlad1456-gbl" target="_blank" rel="noopener" class="btn btn-primary">
+            Open Calendly (placeholder)
+          </a>
+        </div>
+
+        <div class="mt-2 text-sm muted">
+          Or call: <strong>734-726-4216</strong>
+        </div>
+
+        <div class="highlight-box mt-2">
+          <strong>What to have ready</strong>
+          <div class="mt-1 text-xs">
+            A rough sense of your workload type (LLMs, vision, simulation, etc.), timeline, and whether
+            you prefer a flexible or reserved model. We’ll handle the infrastructure details.
+          </div>
+        </div>
+      </article>
+	  
+	  
+	  
+	  
+
+
+      <!-- Request access form -->
+      <article class="card-form" aria-labelledby="access-heading">
+        <h3 id="access-heading" style="margin: 0 0 8px; font-size: 16px;">Request access</h3>
+        <p class="text-sm muted">
+          Tell us about your organization and what you’re planning to run. We’ll follow up with
+          availability and next steps.
+        </p>
+
+        <form action="https://formspree.io/f/xwpgqgqp" method="POST" class="mt-2">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="name">Name<span class="form-required">*</span></label>
+              <input class="form-control" type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email<span class="form-required">*</span></label>
+              <input class="form-control" type="email" id="email" name="email" placeholder="you@company.com" required>
+            </div>
+          </div>
+
+          <div class="form-grid mt-2">
+            <div class="form-group">
+              <label class="form-label" for="org">Organization / Project<span class="form-required">*</span></label>
+              <input class="form-control" type="text" id="org" name="organization" placeholder="Company, lab, or project" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="timeline">Rough timeline</label>
+              <input class="form-control" type="text" id="timeline" name="timeline" placeholder="e.g., Q1 pilot, 6–12 month reservation">
+            </div>
+          </div>
+
+          <div class="form-group mt-2">
+            <label class="form-label" for="workload">What will you be running?<span class="form-required">*</span></label>
+            <textarea class="form-textarea" id="workload" name="message" required
+              placeholder="Briefly describe your workloads (e.g., LLM fine-tuning, diffusion models, robotics sim, etc.)"></textarea>
+            <div class="form-hint">
+              Helpful details: frameworks, typical batch sizes, expected GPU hours per month, data locality or security constraints.
+            </div>
+          </div>
+
+          <!-- Optional metadata -->
+          <input type="hidden" name="_subject" value="New GBL Servers Request Access">
+          <input type="hidden" name="_template" value="table">
+          <input type="text" name="_gotcha" style="display:none">
+
+          <div class="form-footer-row">
+            <div class="form-status-pill">
+              <span class="status-dot"></span>
+              <span>We typically respond within one business day.</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+          </div>
+        </form>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+   
 	
 	
 	
